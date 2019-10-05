@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { Link } from 'react-router-dom';
 
 function CourseList(props) {
-    let authors = props.authors;
     return (
         <>
             <table className="table">
                 <thead>
                     <tr>
+                        <th>&nbsp;</th>
                         <th>Title</th>
                         <th>Author Id</th>
                         <th>Category</th>
@@ -17,8 +17,16 @@ function CourseList(props) {
                 <tbody>
                     {props.courses.map(course => {
                         return <tr key={course.id} >
+                            <td>
+                                <button
+                                    className="btn btn-outline-danger"
+                                    onClick={() => props.deleteCourse(course.id)}
+                                >
+                                    DELETE
+                                </button>
+                            </td>
                             <td><Link to={"/course/" + course.slug}>{course.title}</Link></td>
-                            <td>{authors[course.authorId].name}</td>
+                            <td>{course.authorId}</td>
                             <td>{course.category}</td>
                         </tr>
                     })}
@@ -29,6 +37,7 @@ function CourseList(props) {
 }
 
 CourseList.propTypes = {
+    deleteCourse: PropTypes.func.isRequired,
     courses: PropTypes.array.isRequired
 }
 
